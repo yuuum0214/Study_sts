@@ -24,8 +24,8 @@ public class AllExceptionHandler {
 	@ResponseStatus(HttpStatus.BAD_REQUEST)
 	public HttpEntity<ErrorResponse> handlerBindingResultException(RequestException exception){
 		
-		// catch exception
-		if(exception.getException != null) {
+		// catch exception getException
+		if(exception.getException() != null) {
 			Exception ex = exception.getException();
 			StackTraceElement [] steArr = ex.getStackTrace();
 			for(StackTraceElement ste : steArr) {
