@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+//import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Component;
 
@@ -14,7 +15,12 @@ public class Pagination {
 		Map<String, Object> map = new HashMap<String, Object>();
 		
 		//페이지 넘버 초기화
+		//String pnum = request.getParameter("page");
+		
+		//페이지 넘버 초기화
+		//HttpSession session = request.getSession();
 		String pnum = request.getParameter("page");
+		
 		System.out.println("pnum"+pnum);
 		if (pnum == null) { pnum = "1"; }
 		
@@ -47,6 +53,46 @@ public class Pagination {
 		map.put("endpage", endpage);
 		map.put("offset", offset);
 
+		return map;
+	}
+	
+	public static Map<String, Object> uploadPagination(int Gtotal, int pageCount, HttpServletRequest request) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		//페이지 넘버 초기화
+		String pnum = request.getParameter("Gnum");
+		if (pnum == null) { pnum = "1"; }
+		
+		//스트링을 인트로로 파싱
+		int rowNUM = Integer.parseInt(pnum);
+		if(rowNUM < 0) {rowNUM = 1;}
+		
+		//페이지네이션 범위 정함
+		int pageNum;
+		if(Gtotal % pageCount == 0) { 
+			pageNum = Gtotal / pageCount;
+		}else {
+			pageNum = (Gtotal / pageCount) + 1;
+		}
+		
+		if(rowNUM > pageNum) { rowNUM = pageNum; }
+		
+		//페이지네이션 중간범위 지정
+		int temp = (rowNUM - 1) % 10;
+		int startpage = rowNUM - temp;
+		int endpage = startpage + 9;
+		
+		//startpage기준 무조건 +9한 것이라 비교
+		if (endpage > pageNum) { endpage = pageNum; }
+		
+		//쿼리 범위 지정
+		int offset = (rowNUM - 1) * pageCount;
+		
+		map.put("rowNUM", rowNUM);
+		map.put("startpage", startpage);
+		map.put("endpage", endpage);
+		map.put("pageNum", pageNum);
+		map.put("offset", offset);
+		
 		return map;
 	}
 }
