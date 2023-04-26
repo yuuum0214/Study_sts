@@ -92,13 +92,26 @@ public class UserController {
 		return mav; 
 	}
 	
+	
+	//이미지 메뉴  -> 화면 보이기 성공!
+	@GetMapping("imdList")
+	public ModelAndView imdList() {
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("imageboard/imageboardList.html");
+		return mav;
+	}
+	
+	
 	//대시보드 리스트 보여주기
 	@GetMapping("mbList")
 	public ModelAndView mbList(HttpServletRequest request) {
+			
 		ModelAndView mav = new ModelAndView();
 		HttpSession session = request.getSession();
 		
-		String page = (String) session.getAttribute("page"); //session에 담고있는 page꺼냄
+		String page = (String) session.getAttribute("page"); // session에 담고 있는 page 꺼냄
+		//if(page == null)page = "1";
+		
 		//request param 저장 page 가져오기
 		String paramPage = request.getParameter("page");
 		
@@ -119,11 +132,11 @@ public class UserController {
 		mav = mbListCall(request); //리스트만 가져오기
 		
 		mav.setViewName("admin/adminList.html");
-		return mav;
+		return mav; 
 	};
 	
 	//페이징으로 리스트 가져오기
-	public ModelAndView mbListCall(HttpServletRequest request) {//클릭페이지 null 이면
+	public ModelAndView mbListCall(HttpServletRequest request) { //클릭페이지 널이면 
 		ModelAndView mav = new ModelAndView();
 		//페이지네이션 쿼리 참고
 		//SELECT * FROM jsp.member order by mb_update_at limit 1, 5; {offset}{limit}
@@ -135,21 +148,22 @@ public class UserController {
 		//데이터 유무 분기때 사용
 		boolean itemsNotEmpty;
 		
-		if(totalcount > 0) { //데이터 있을 때
-			//itemsNotEmpty true 일때만, 리스트&페이징 보여주기
+		if(totalcount > 0) { // 데이터 있을때
+			
+			// itemsNotEmpty true일때만, 리스트 & 페이징 보여주기
 			itemsNotEmpty = true;
 			//페이지 표현 데이터 가져오기
-			Map<String, Object> pagination = Pagination.pagination(totalcount, request);
+			Map<String,Object> pagination = Pagination.pagination(totalcount, request);
 			
 			Map map = new HashMap<String, Integer>();
-				map.put("offset", pagination.get("offset"));
-				map.put("contentnum", contentnum);
+	        	map.put("offset", pagination.get("offset"));
+	        	map.put("contentnum", contentnum);
 				
 			//페이지별 데이터 가져오기
-			List<LoginDomain> loginDomain = userService.mbAllList(map);
-			
+	        List<LoginDomain> loginDomain = userService.mbAllList(map);
+				
 			//모델객체 넣어주기
-			mav.addObject("itemsNotEmpty", itemsNotEmpty);
+	        mav.addObject("itemsNotEmpty", itemsNotEmpty);
 			mav.addObject("items", loginDomain);
 			mav.addObject("rowNUM", pagination.get("rowNUM"));
 			mav.addObject("pageNum", pagination.get("pageNum"));
@@ -165,7 +179,7 @@ public class UserController {
 	
 	//수정페이지 이동
 	@GetMapping("/modify/{mbSeq}")
-	public ModelAndView mbModify(@PathVariable("mbSeq") String mbSeq, RedirectAttributes re) throws IOException {
+    public ModelAndView mbModify(@PathVariable("mbSeq") String mbSeq, RedirectAttributes re) throws IOException {
 		ModelAndView mav = new ModelAndView();
 		re.addAttribute("mbSeq", mbSeq);
 		mav.setViewName("redirect:/mbEditList");
@@ -175,22 +189,23 @@ public class UserController {
 	//대시보드 리스트 보여주기
 	@GetMapping("mbEditList")
 	public ModelAndView mbListEdit(@RequestParam("mbSeq") String mbSeq, HttpServletRequest request) {
+		
 		ModelAndView mav = new ModelAndView();
-		//해당리스트 가져옴
-		mav = mbListCall(request);
+		// 해당리스트 가져옴
+		mav = mbListCall(request);  
 		Map map = new HashMap<String, String>();
 		map.put("mbSeq", mbSeq);
 		LoginDomain loginDomain = userService.mbSelectList(map);
-		System.out.println("loginDomain"+loginDomain.getMbLevel());
-		mav.addObject("item", loginDomain);
+		mav.addObject("item",loginDomain);
 		mav.setViewName("admin/adminEditList.html");
-		return mav;
+		return mav; 
 	}
 	
 	
 	//수정업데이트
 	@RequestMapping("/update")
 	public ModelAndView mbModify(LoginVO loginVO, HttpServletRequest request, RedirectAttributes re) throws IOException {
+		
 		ModelAndView mav = new ModelAndView();
 		
 		//page 초기화
@@ -263,7 +278,7 @@ public class UserController {
 			String redirectPath = "/main";
 			System.out.println(loginVO.getAdmin());
 			if(loginVO.getAdmin() != null) {
-				redirectPath = "/main/mbList?page="+page;
+				redirectPath = "/main/mbList?page="+page ;
 			}
 			CommonUtils.redirect(alertText, redirectPath, response);
 		}else {
