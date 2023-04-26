@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+                        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.co.kr.mapper.UploadImgMapper">
+
+	<!-- select all -->
+	<select id="imgboardList" resultType="com.co.kr.domain.ImgBoardListDomain">
+		SELECT ibd_seq, mb_id, ibd_title, ibd_create_at, ibd_update_at
+		FROM jsp.imgboard order by ibd_update_at desc	
+	</select>
+
+</mapper>

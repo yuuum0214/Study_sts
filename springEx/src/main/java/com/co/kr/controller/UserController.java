@@ -20,7 +20,9 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.co.kr.domain.BoardListDomain;
+import com.co.kr.domain.ImgBoardListDomain;
 import com.co.kr.domain.LoginDomain;
+import com.co.kr.service.UploadImgService;
 import com.co.kr.service.UploadService;
 import com.co.kr.service.UserService;
 import com.co.kr.util.CommonUtils;
@@ -39,6 +41,9 @@ public class UserController {
 	
 	@Autowired
 	private UploadService uploadService;
+	
+	@Autowired
+	private UploadImgService uploadimgService; //이미지 게시판을 위해 추가
 
 	@RequestMapping(value = "board")
 	public ModelAndView login(LoginVO loginDTO, HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -90,15 +95,6 @@ public class UserController {
 		mav.addObject("items", items);
 		mav.setViewName("board/boardList.html");
 		return mav; 
-	}
-	
-	
-	//이미지 메뉴  -> 화면 보이기 성공!
-	@GetMapping("imdList")
-	public ModelAndView imdList() {
-		ModelAndView mav = new ModelAndView();
-		mav.setViewName("imageboard/imageboardList.html");
-		return mav;
 	}
 	
 	
@@ -330,6 +326,18 @@ public class UserController {
 		HttpSession session = request.getSession();
 		session.invalidate(); //전체 삭제
 		mav.setViewName("index.html");
+		return mav;
+	}
+	
+	
+	//이미지 메뉴  -> 화면 보이기 성공!
+//	@GetMapping("imdList")
+	@RequestMapping(value = "imdList")
+	public ModelAndView imdList() {
+		ModelAndView mav = new ModelAndView();
+		List<ImgBoardListDomain> items = uploadimgService.imgboardList();
+		mav.addObject("items", items);
+		mav.setViewName("imageboard/imageboardList.html");
 		return mav;
 	}
 	

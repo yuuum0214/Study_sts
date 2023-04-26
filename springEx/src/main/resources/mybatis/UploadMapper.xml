@@ -16,8 +16,8 @@
 	
         INSERT INTO jsp.board (
             mb_id,   
-						bd_title,                         
-						bd_content  
+			bd_title,                         
+			bd_content  
         )
         VALUES (
             #{mbId},
