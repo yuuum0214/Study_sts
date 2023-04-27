@@ -13,7 +13,6 @@
 	<insert id="contentUpload" parameterType="com.co.kr.domain.BoardContentDomain"
 	useGeneratedKeys="true"
         keyProperty="bdSeq" keyColumn="bd_seq">
-	
         INSERT INTO jsp.board (
             mb_id,   
 			bd_title,                         
@@ -90,7 +89,5 @@
 	    SELECT bd_seq, mb_id, up_original_file_name, up_new_file_name, up_file_path, up_file_size
 	    FROM jsp.view_board where bd_seq = #{bdSeq}
 	</select>
-	
-
 
 </mapper>

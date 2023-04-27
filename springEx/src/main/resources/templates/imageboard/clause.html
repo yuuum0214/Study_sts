@@ -14,7 +14,7 @@
 </div>
 
 <div class="title" style="color:#00a2be">이미지 리스트</div>
-<form role="form" action="upload" method="post" enctype="multipart/form-data">
+<form role="form" action="iupload" method="post" enctype="multipart/form-data">
     <div class="section form">
        <table>
         <colgroup>
@@ -29,21 +29,11 @@
                      <input type="text" name="title" placeholder="제목" required/>
                 </td>
             </tr>
-            
-            <!--  
-            <tr> 
-               <th>내용</th>
-                <td >
-                   <textarea colspan="2" id="story" name="content" placeholder="내용을 적어주세요." rows="5" cols="200" required></textarea>
-                </td>
-            </tr>
-            -->
-            
-            
+
             <tr> 
                <th><label for="file">첨부파일</label></th>
                 <td>
-                    <input type="file" id="file" name="files" multiple />
+                    <input type="file" id="file" name="files" multiple required />
                 </td>
             </tr>
         </tbody>

@@ -9,6 +9,6 @@ public class ImgFileListVO {
 
 	private String isEdit;
 	private String seq;
-	private String title;
-//	private String content;
+	private String ititle;
+	private String icontent;
 }

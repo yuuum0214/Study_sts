@@ -8,5 +8,81 @@
 		SELECT ibd_seq, mb_id, ibd_title, ibd_create_at, ibd_update_at
 		FROM jsp.imgboard order by ibd_update_at desc	
 	</select>
+	
+	<!-- content insert -->
+	<insert id="imgContentUpload" parameterType="com.co.kr.domain.ImgBoardContentDomain" useGeneratedKeys="true" keyProperty="ibdSeq" keyColumn="ibd_seq">
+        INSERT INTO jsp.imgboard (
+            mb_id,   
+			ibd_title                      
+        )
+        VALUES (
+            #{mbId},
+            #{ibdTitle}
+        )
+	</insert>
+	
+	<!-- file insert -->
+	<insert id="imgfileUpload" parameterType="com.co.kr.domain.ImgBoardFileDomain">
+        INSERT INTO jsp.imgfiles (
+            ibd_seq,
+            mb_id,   
+            up_original_imgfile_name,                         
+            up_new_imgfile_name,                      
+            up_imgfile_path,                                   
+            up_imgfile_size
+        )
+        VALUES (
+            #{ibdSeq},
+            #{mbId},
+            #{upOriginalImgFileName},
+            #{upNewImgFileName},
+            #{upImgFilePath},
+            #{upImgFileSize}
+        )
+    </insert>
+
+	<!-- Content update -->
+    <update id="bdimgContentUpdate" parameterType="com.co.kr.domain.ImgBoardContentDomain">
+        UPDATE jsp.imgboard SET
+                ibd_seq=#{ibdSeq},
+                mb_id=#{mbId},
+                ibd_title=#{ibdTitle},
+                ibd_update_at=now()  
+        WHERE ibd_seq=#{ibdSeq}
+    </update>
+
+    <!-- file update -->
+    <update id="bdimgFileUpdate" parameterType="com.co.kr.domain.ImgBoardFileDomain">
+        UPDATE jsp.imgfiles SET
+                ibd_seq=#{ibdSeq},
+                mb_id=#{mbId},
+                up_original_imgfile_name=#{upOriginalImgFileName},
+                up_new_imgfile_name=#{upNewImgFileName}, 
+                up_imgfile_path=#{upImgFilePath},
+                up_imgfile_size=#{upImgFileSize}
+        WHERE ibd_seq=#{ibdSeq}
+    </update>
+
+	<!-- Content delete -->
+    <delete id="bdimgContentRemove" parameterType="hashMap">
+       DELETE FROM jsp.imgboard WHERE ibd_seq=#{ibdSeq}
+    </delete>
+	<!-- file delete -->
+    <delete id="bdimgFileRemove" parameterType="com.co.kr.domain.ImgBoardFileDomain">
+	    DELETE FROM jsp.imgfiles WHERE up_new_imgfile_name = #{upNewImgFileName}
+	</delete>
+
+	
+	<!-- content -->
+	<select id="iboardSelectOne" resultType="com.co.kr.domain.ImgBoardListDomain" parameterType="map">
+	    SELECT ibd_seq, mb_id, ibd_title, ibd_create_at, ibd_update_at
+	    FROM jsp.imgboard where ibd_seq = #{ibdSeq}
+	</select>
+
+	<!-- file -->
+	<select id="iboardSelectOneFile" resultType="com.co.kr.domain.ImgBoardFileDomain" parameterType="map">
+	    SELECT ibd_seq, mb_id, up_original_imgfile_name, up_new_imgfile_name, up_imgfile_path, up_imgfile_size
+	    FROM jsp.view_imgboard where ibd_seq = #{ibdSeq}
+	</select>
 
 </mapper>
