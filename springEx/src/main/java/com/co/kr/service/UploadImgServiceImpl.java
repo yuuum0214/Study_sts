@@ -111,7 +111,7 @@ public class UploadImgServiceImpl implements UploadImgService {
 			}
 			
 			//새 파일 저장
-			Path rootPath = Paths.get(new File("E://").toString(),"i_upload", File.separator).toAbsolutePath().normalize();
+			Path rootPath = Paths.get(new File("E://").toString(),"iupload", File.separator).toAbsolutePath().normalize();
 			File pathCheck = new File(rootPath.toString());
 			
 			//folder check
@@ -155,7 +155,7 @@ public class UploadImgServiceImpl implements UploadImgService {
 							.ibdSeq(ibdSeq)
 							.mbId(mbId)
 							.upOriginalImgFileName(origFilename)
-							.upNewImgFileName("resources/iupload/"+newImgFileName)
+							.upNewImgFileName("/resources/iupload/"+newImgFileName)
 							.upImgFilePath(targetPath.toString())
 							.upImgFileSize((int)multipartFile.getSize())
 							.build();

@@ -12,8 +12,8 @@
 	<!-- content insert -->
 	<insert id="imgContentUpload" parameterType="com.co.kr.domain.ImgBoardContentDomain" useGeneratedKeys="true" keyProperty="ibdSeq" keyColumn="ibd_seq">
         INSERT INTO jsp.imgboard (
-            mb_id,   
-			ibd_title                      
+            mb_id,
+			ibd_title
         )
         VALUES (
             #{mbId},

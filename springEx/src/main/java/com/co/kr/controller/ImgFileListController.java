@@ -46,7 +46,7 @@ public class ImgFileListController {
 		return mav;
 	}
 
-	public ModelAndView ibdSelectOneCall(@ModelAttribute("imgfileLisVO") ImgFileListVO imgfileListVO, String ibdSeq, HttpServletRequest request) {
+	public ModelAndView ibdSelectOneCall(@ModelAttribute("imgfileListVO") ImgFileListVO imgfileListVO, String ibdSeq, HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView();
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		HttpSession session = request.getSession();

@@ -57,6 +57,6 @@ public class WebConfig implements WebMvcConfigurer {
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
 		// /images/** 은 /resources/images/ 으로 시작하는 uri호출은 /resources/images/ 경로 하위에 있는 리소스 파일이다 라는 의미입니다.
 		registry.addResourceHandler("/resources/upload/**").addResourceLocations("file:///E:/upload/");
-		registry.addResourceHandler("/resources/i_upload/**").addResourceLocations("file:///E:/i_upload/"); //이미지게시판용
+		registry.addResourceHandler("/resources/iupload/**").addResourceLocations("file:///E:/iupload/"); //이미지게시판용
 	}
 }
